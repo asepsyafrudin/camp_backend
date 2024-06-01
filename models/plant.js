@@ -21,7 +21,7 @@ export const createPlantModels = async (data) => {
       '${data.create_by}', 
       '${data.update_by}', 
       1, 
-      0
+      ${data.status || 0}
     )
   `;
 

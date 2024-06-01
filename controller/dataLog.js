@@ -57,7 +57,6 @@ export const getDataLog = async (req, res) => {
       }
     }
 
-    console.log;
 
     const sortedAsc = result.sort(function (a, b) {
       return a.id - b.id;

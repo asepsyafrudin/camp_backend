@@ -9,7 +9,12 @@ import {
 
 export const createPlant = async (req, res) => {
   try {
-    await createPlantModels(req.body);
+    const [checkPlant] = await getPlantModels();
+    if (checkPlant.length === 0) {
+      await createPlantModels({ ...req.body, status: 1 });
+    } else {
+      await createPlantModels(req.body);
+    }
     res.status(200).json({
       msg: "Submit Data Berhasil",
       data: req.body,
