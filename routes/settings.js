@@ -10,6 +10,7 @@ import { auth } from "../middleware/auth.js";
 const router = express.Router();
 
 router.get("/getMasterSetting", auth, getSettings);
+router.get("/getMasterSettingForArduino", authLog, getSettings);
 router.put("/update", auth, updateSettings);
 router.put("/updateByDevice", authLog, updateByDeviceSettings);
 

@@ -57,15 +57,16 @@ const humidity = () => {
 };
 
 // setInterval(async () => {
-//   const data = {
-//     plant_id: "P001",
-//     ph: ph(),
-//     temperature: temperature(),
-//     humidity: humidity(),
-//     create_by: "admin",
-//     update_by: "admin",
-//     flag: 1,
-//   };
+// const data = {
+//   plant_id: "",
+//   ph: float,
+//   temperature: float,
+//   humidity: float,
+//   create_by: "",
+//   update_by: "",
+//   API_KEY : "",
+//   API_SECRET : ""
+// };
 //   await createDataLogModels(data);
 // }, 10000);
 // for (let index = 0; index < 1000; index++) {
