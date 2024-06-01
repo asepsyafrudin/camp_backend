@@ -11,7 +11,7 @@ export const createDataLogModels = async (data) => {
         update_by,
         flag) 
         VALUES (
-        ${data.plant_id},
+        '${data.plant_id}',
         ${data.ph},
         ${data.temperature},
         ${data.humidity},
@@ -24,6 +24,6 @@ export const createDataLogModels = async (data) => {
 };
 
 export const getDataLogModels = async (plant_id) => {
-  const query = `SELECT * FROM t_monitoring where plant_id = ${plant_id} order by id desc LIMIT 500;`;
+  const query = `SELECT * FROM t_monitoring where plant_id = '${plant_id}' order by id desc LIMIT 500;`;
   return db.execute(query);
 };

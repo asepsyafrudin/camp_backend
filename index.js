@@ -9,20 +9,35 @@ import { createDataLogModels } from "./models/dataLog.js";
 import plantRoutes from "./routes/plant.js";
 import settingRoutes from "./routes/settings.js";
 import { auth } from "./middleware/auth.js";
+import env from "dotenv";
+import compression from "compression";
+import http from "http";
+import { log } from "./config/logconfig.js";
+
+env.config();
+
+const port = process.env.PORT || 5000;
+http.globalAgent.maxSockets = Infinity;
 
 const app = express();
+const server = http.createServer(app);
+app.use(compression());
 
 app.use(cors());
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 app.use("/static", express.static(path.join(__dirname, "./assets")));
-app.use(express.static(path.join(__dirname, "./public")));
+// app.use(express.static(path.join(__dirname, "./public")));
+
 app.use(express.json());
 
 app.use("/api/users", userRoutes);
 app.use("/api/login", loginRoutes);
 app.use("/api/data_log", dataLogRoutes);
 app.use("/api/master_plant", plantRoutes);
-app.use("/api/master_setting", auth, settingRoutes);
+app.use("/api/master_setting", settingRoutes);
+app.use("", (req, res) => {
+  res.send("hello world");
+});
 const ph = () => {
   const max = 8;
   const min = 6;
@@ -36,14 +51,26 @@ const temperature = () => {
 };
 
 const humidity = () => {
-  const max = 60;
-  const min = 40;
+  const max = 80;
+  const min = 20;
   return Math.random() * (max - min) + min;
 };
 
+// setInterval(async () => {
+//   const data = {
+//     plant_id: "P001",
+//     ph: ph(),
+//     temperature: temperature(),
+//     humidity: humidity(),
+//     create_by: "admin",
+//     update_by: "admin",
+//     flag: 1,
+//   };
+//   await createDataLogModels(data);
+// }, 10000);
 // for (let index = 0; index < 1000; index++) {
 //   const data = {
-//     plant_id: 1,
+//     plant_id: 2,
 //     ph: ph(),
 //     temperature: temperature(),
 //     humidity: humidity(),
@@ -55,6 +82,6 @@ const humidity = () => {
 //   await createDataLogModels(data);
 // }
 
-app.listen(8080, () => {
-  console.log("Server Already Run");
+server.listen(port, () => {
+  log.info("Server Already Run on Port " + port);
 });

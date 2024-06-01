@@ -1,10 +1,13 @@
 import mysql from "mysql2";
+import env from "dotenv";
+
+env.config();
 
 const db = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "paras23082011",
-  database: "dx_montir",
+  host: process.env.SERVER,
+  user: process.env.USER,
+  password: process.env.PASSWORD,
+  database: process.env.DATABASE,
 });
 
 export default db.promise();

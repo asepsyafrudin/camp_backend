@@ -17,7 +17,7 @@ export const createDataLog = async (req, res) => {
     // Return a success response with the data log data.
     res.status(200).json({
       msg: "Submit Data Berhasil",
-      data: req.body,
+      data: req.body.plant_id,
     });
   } catch (error) {
     // If an error occurs, return an error response.
@@ -44,17 +44,20 @@ export const getDataLog = async (req, res) => {
 
     if (plant.length > 0) {
       let plant_data = plant.find((value) => value.status === 1);
-      plant_id = plant_data.id;
+      plant_id = plant_data.plant_id;
     }
+
     const [result] = await getDataLogModels(plant_id);
 
     if (result.length > 0) {
       for (let index = 0; index < result.length; index++) {
         result[index]["plant_name"] = plant.find(
-          (item) => item.id === result[index].plant_id
+          (item) => item.plant_id === result[index].plant_id
         ).plant_name;
       }
     }
+
+    console.log;
 
     const sortedAsc = result.sort(function (a, b) {
       return a.id - b.id;

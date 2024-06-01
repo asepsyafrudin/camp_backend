@@ -4,6 +4,7 @@ import db from "../config/db.js";
  * Inserts a new plant into the m_plant table.
  *
  * @param {Object} data - The data of the plant to be inserted.
+ * @param {string} data.plant_id - The ID of the plant.
  * @param {string} data.plant_name - The name of the plant.
  * @param {string} data.create_by - The user who created the plant.
  * @param {string} data.update_by - The user who updated the plant.
@@ -11,14 +12,16 @@ import db from "../config/db.js";
  */
 export const createPlantModels = async (data) => {
   // Construct the SQL query to insert a new plant into the m_plant table.
+  // The flag is set to 1 (active) and status is set to 0 (not active) by default.
   const query = `
-    INSERT INTO m_plant (plant_name, create_by, update_by, flag, status) 
+    INSERT INTO m_plant (plant_id, plant_name, create_by, update_by, flag, status) 
     VALUES (
+      '${data.plant_id}',
       '${data.plant_name}', 
       '${data.create_by}', 
       '${data.update_by}', 
-      ${1}, 
-      ${0}
+      1, 
+      0
     )
   `;
 
